@@ -1,0 +1,4 @@
+.claude/
+*.pdf
+!assets/docs/resume.pdf
+Gemini_Generated_Image_*
