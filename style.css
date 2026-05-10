@@ -1028,6 +1028,8 @@ ul { list-style: none; }
 .award-type-badge.grant { background: var(--grant-bg); color: var(--grant-text); }
 .award-type-badge.award { background: var(--award-bg); color: var(--award-text); }
 .award-type-badge.talk  { background: var(--talk-bg);  color: var(--talk-text); }
+.award-icon-wrap.exam  { background: var(--journal-bg); color: var(--journal-text); }
+.award-type-badge.exam { background: var(--journal-bg); color: var(--journal-text); }
 
 .award-body h3 {
     font-size: 0.975rem;
