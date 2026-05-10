@@ -1,0 +1,239 @@
+\documentclass[letterpaper,11pt]{article}
+
+%-----------------------------------------------------------
+% Packages
+%-----------------------------------------------------------
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+
+%-----------------------------------------------------------
+% Page Setup
+%-----------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.6in}
+\addtolength{\textwidth}{1.2in}
+\addtolength{\topmargin}{-0.6in}
+\addtolength{\textheight}{1.2in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Colors
+\definecolor{primary}{RGB}{29, 78, 216}
+\definecolor{text}{RGB}{30, 41, 59}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\color{primary}
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%-----------------------------------------------------------
+% Custom Commands
+%-----------------------------------------------------------
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-----------------------------------------------------------
+% DOCUMENT START
+%-----------------------------------------------------------
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    {\Huge \scshape Suman Maiti} \\ \vspace{4pt}
+    \small PhD Student, Department of Computer Science and Engineering, IIT Kharagpur \\ \vspace{4pt}
+    \faEnvelope\ \href{mailto:suman.kgp1999@gmail.com}{\underline{suman.kgp1999@gmail.com}} ~ 
+    \faLinkedin\ \href{https://www.linkedin.com/in/suman-maiti-ab2882250/}{\underline{LinkedIn}} ~
+    \faGithub\ \href{https://github.com/sumanmaiti100}{\underline{GitHub}} ~
+    \faGraduationCap\ \href{https://scholar.google.com/citations?user=FTC-QboAAAAJ&hl=en}{\underline{Google Scholar}}
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Indian Institute of Technology Kharagpur}{Kharagpur, India}
+      {Doctor of Philosophy (PhD) in Computer Science and Engineering}{Jan 2022 -- Present}
+      \resumeItemListStart
+        \resumeItem{\textbf{Research Focus:} Cyber-Physical Systems Security, Smart Grid Security, Formal Methods, Safe RL.}
+        \resumeItem{\textbf{Coursework:} High Performance Computer Architecture, Foundations of Algorithm Design and Machine Learning, AI for Cyber-Physical Systems, Computational Foundations of CPS, Statistical Methods.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Kalyani Government Engineering College}{Nadia, India}
+      {Bachelor of Technology (B.Tech) in Electrical Engineering \textbar\ \textbf{DGPA: 9.03/10}}{Sep 2017 -- Aug 2021}
+    \resumeSubheading
+      {D.A.V. Model School, IIT Campus}{Kharagpur, India}
+      {All India Senior School Certificate Examination (Class XII) \textbar\ \textbf{93.8\%}}{Mar 2017}
+  \resumeSubHeadingListEnd
+
+%-----------RESEARCH EXPERIENCE-----------
+\section{Research Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Junior Research Fellow (JRF)}{Oct 2021 -- Dec 2023}
+      {Indian Institute of Technology Kharagpur}{Kharagpur, India}
+      \resumeItemListStart
+        \resumeItem{\textbf{Smart Grid Privacy and Security:} Conducted research into vulnerabilities in smart grid environments and their countermeasures.}
+        \resumeItem{Applied machine learning techniques, particularly reinforcement learning, to identify vulnerabilities in IEEE 9, 14, 37, and 39 bus power grid models.}
+        \resumeItem{Investigated industrial SCADA communication protocols including DNP3, DNP3-SA, and Modbus for threat modeling.}
+      \resumeItemListEnd
+      
+    \resumeSubheading
+      {Summer Research Intern}{Jun 2019 -- Jul 2019}
+      {Indian Institute of Technology Kharagpur}{Kharagpur, India}
+      \resumeItemListStart
+        \resumeItem{\textbf{Design of a Digital Clock using 8085 Microprocessor:} Implemented microprocessor programming to display time using a seven-segment display, gaining foundational experience in low-level hardware-software interaction.}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Selected Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Formal Methods for Smart Grid Privacy and Security} \textbar\ \emph{Staliro, RL, IEEE Bus Models}}{}
+          \resumeItemListStart
+            \resumeItem{Investigated vulnerabilities of IEEE 9, 14, and 39 bus power grid generation and distribution units using a reinforcement learning agent combined with the formal falsification tool Staliro.}
+            \resumeItem{Produced targeted attack sequences and formal safety proofs under Metric Temporal Logic (MTL) specifications.}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{Fault Studies of Wind-Farm Embedded Power Network} \textbar\ \emph{MATLAB/Simulink}}{}
+          \resumeItemListStart
+            \resumeItem{Simulated symmetrical and asymmetrical fault conditions in a 225/90 kV power transmission network.}
+            \resumeItem{Analyzed voltage and power waveforms of transmission lines during fault conditions (Published at IEEE DevIC 2021).}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{CPU Architecture Performance Estimation} \textbar\ \emph{GEM5 Simulator, C++}}{}
+          \resumeItemListStart
+            \resumeItem{Developed a framework for generating different CPU configuration combinations from user-specified parameters.}
+            \resumeItem{Evaluated performance by running benchmark programs on the GEM5 system simulator, enabling systematic architectural trade-off analysis.}
+          \resumeItemListEnd
+      \resumeProjectHeading
+          {\textbf{Autonomous Driving in F-1/10 Vehicle} \textbar\ \emph{Control Theory} \textbar\ \emph{In Progress}}{}
+          \resumeItemListStart
+            \resumeItem{Designing a controller for an F-1/10 autonomous vehicle that enables it to follow a given track while avoiding obstacles with formal safety guarantees.}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+%-----------PUBLICATIONS-----------
+\section{Publications}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    \item \textbf{Journal Articles}
+    \vspace{-4pt}
+    \begin{itemize}[leftmargin=0.2in, label={$\vcenter{\hbox{\tiny$\bullet$}}$}]
+        \item S. Ghosh, \textbf{S. Maiti}, D. Mukhopadhyay, S. Dey. \textit{"Differentially Private Real Time Pricing Control for Smart Grids"}, ACM Transactions on Cyber-Physical Systems, 2025.
+    \end{itemize}
+    \vspace{4pt}
+
+    \item \textbf{Conference Proceedings}
+    \vspace{-4pt}
+    \begin{itemize}[leftmargin=0.2in, label={$\vcenter{\hbox{\tiny$\bullet$}}$}]
+        \item \textbf{S. Maiti}, A. Balabhaskara, S. Adhikary, I. Koley, S. Dey. \textit{"Targeted Attack Synthesis for Smart Grid Vulnerability Analysis"}, Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS '23), 2023. \textbf{[Cited by 18]}
+        \item \textbf{S. Maiti}, S. Som, S. Mondal, P. K. Gayen. \textit{"Symmetrical and Asymmetrical Fault Studies of Wind-Farm Embedded Power Network"}, Devices for Integrated Circuit (DevIC), IEEE, 2021.
+    \end{itemize}
+    \vspace{4pt}
+
+    \item \textbf{Preprints}
+    \vspace{-4pt}
+    \begin{itemize}[leftmargin=0.2in, label={$\vcenter{\hbox{\tiny$\bullet$}}$}]
+        \item \textbf{S. Maiti}, S. Adhikary, S. Dey, A. R. Hota. \textit{"Learning-Enabled Adaptive Voltage Protection Against Load Alteration Attacks on Smart Grids"}, arXiv:2411.15229, 2024.
+        \item \textbf{S. Maiti}, S. Dey. \textit{"Smart Grid Security: A Verified Deep Reinforcement Learning Framework to Counter Cyber-Physical Attacks"}, arXiv:2409.15757, 2024. \textbf{[Cited by 11]}
+    \end{itemize}
+  \end{itemize}
+
+%-----------TEACHING-----------
+\section{Teaching Assistant Experience (IIT Kharagpur)}
+  \resumeSubHeadingListStart
+    \resumeSubheading{Programming and Data Structures Laboratory}{Jan 2026 -- May 2026}{\textnormal{Spring Semester 2026 \textbar\ Instructor: Prof. Dipanwita Roy Chowdhury}}{}
+    \resumeSubheading{Reinforcement Learning}{Jul 2025 -- Jan 2026}{\textnormal{Autumn Semester 2025 \textbar\ Instructor: Prof. Soumyajit Dey}}{}
+    \resumeSubheading{Formal Language and Automata Theory}{Feb 2025 -- Jul 2025}{\textnormal{Spring Semester 2025 \textbar\ Instructors: Prof. Soumyajit Dey \& Prof. Animesh Mukherjee}}{}
+    \resumeSubheading{Programming and Data Structures Theory}{Jul 2024 -- Jan 2025}{\textnormal{Autumn Semester 2024 \textbar\ Instructor: Prof. Soumyajit Dey}}{}
+    \resumeSubheading{Formal Language and Automata Theory}{Aug 2023 -- Mar 2024}{\textnormal{Autumn 2023 – Spring 2024 \textbar\ Instructors: Prof. Soumyajit Dey \& Prof. Animesh Mukherjee}}{}
+    \resumeSubheading{Programming and Data Structures Laboratory (3 Semesters)}{Oct 2022 -- Jul 2023}{\textnormal{Instructors: Prof. Pallab Dasgupta, Prof. Soumyakanti Ghosh, Prof. K. S. Rao, Prof. Debasis Samanta}}{}
+  \resumeSubHeadingListEnd
+
+%-----------PROFESSIONAL SERVICE & MENTORSHIP-----------
+\section{Professional Service \& Mentorship}
+  \resumeSubHeadingListStart
+    \resumeProjectHeading
+        {\textbf{Professional Service \& Peer Review}}{}
+        \resumeItemListStart
+          \resumeItem{\textbf{External Reviewer (Journals):} IEEE Transactions on Power Systems, IEEE Transactions on Smart Grid, IEEE Transactions on Industrial Cyber-Physical Systems, IEEE Transactions on Computer-Aided Design of Integrated Circuits \& Systems (TCAD).}
+          \resumeItem{\textbf{External Reviewer (Conferences):} ICCPS (2024, 2025, 2026), ICCPS Artifact Evaluation Committee (2026), AAAI (2023), Euromicro Conference on Digital System Design (DSD) (2023, 2024), IEEE Real-Time Systems Symposium (RTSS) (2023).}
+        \resumeItemListEnd
+    \resumeProjectHeading
+        {\textbf{Mentorship \& Academic Services}}{}
+        \resumeItemListStart
+          \resumeItem{\textbf{AICTE Faculty Quality Improvement Program:} Guided 5 faculty members on the application of Reinforcement Learning in Cyber-Physical Systems Operation.}
+          \resumeItem{\textbf{Student Mentorship:} Mentoring B.Tech and Dual Degree thesis students (CSE, IIT Kharagpur) on learning-assisted methods for smart grid vulnerability analysis.}
+        \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------AWARDS & ACHIEVEMENTS-----------
+\section{Awards, Grants \& Talks}
+  \resumeSubHeadingListStart
+    \resumeSubItem{\textbf{ACM IARCS Travel Grant:} Awarded INR 1,00,000 in recognition of research contribution.}
+    \resumeSubItem{\textbf{ACM CCS 2023 Student Travel Grant:} Recipient of travel grant for the ACM Conference on Computer and Communications Security.}
+    \resumeSubItem{\textbf{CHANAKYA PhD Fellowship (2024-2025):} Awarded the prestigious CHANAKYA PhD fellowship by the AI4ICPS Hub, IIT Kharagpur.}
+    \resumeSubItem{\textbf{Invited Talk:} Delivered talk at ACM ARCS Event 2023 at NISER Bhubaneswar on smart grid security and attack synthesis.}
+    \resumeSubItem{\textbf{GATE 2021 (Electrical Engineering):} Secured \textbf{94.4 Percentile} in the Graduate Aptitude Test in Engineering, qualifying for doctoral admissions.}
+  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Programming Languages}{: Python, C++, C, PHP, LaTeX} \\
+     \textbf{ML / DL Frameworks}{: TensorFlow, Keras, Scikit-learn, Stable Baselines3, Gymnasium, PyTorch} \\
+     \textbf{Formal Verification}{: Z3 SMT Solver, Staliro (Falsification), UPPAAL, TuLiP, Metric Temporal Logic, Hybrid Automata} \\
+     \textbf{Engineering Tools}{: MATLAB, Simulink, RT-Lab, LabVIEW, Artemis, HYPERSIM, EMTP-RV / Ephasorsim} \\
+     \textbf{Hardware \& Platforms}{: OP4510 (Opal-RT), SEL-421 (Schweitzer), Raspberry Pi, Linux, Windows} \\
+     \textbf{SCADA \& Protocols}{: DNP3, DNP3-SA (Secure Authentication), Modbus RTU/TCP} \\
+     \textbf{Development}{: Git, Docker, Jupyter Notebook, pandapower, GEM5 Simulator}
+    }}
+ \end{itemize}
+
+\end{document}
