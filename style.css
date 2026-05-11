@@ -292,8 +292,8 @@ ul { list-style: none; }
 }
 
 .profile-photo {
-    width: clamp(160px, 22vw, 220px);
-    height: clamp(160px, 22vw, 220px);
+    width: clamp(200px, 28vw, 280px);
+    height: clamp(200px, 28vw, 280px);
     border-radius: 50%;
     object-fit: cover;
     border: 4px solid var(--border);
@@ -303,8 +303,8 @@ ul { list-style: none; }
 
 .initials-avatar {
     display: none;
-    width: clamp(160px, 22vw, 220px);
-    height: clamp(160px, 22vw, 220px);
+    width: clamp(200px, 28vw, 280px);
+    height: clamp(200px, 28vw, 280px);
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     color: #fff;
