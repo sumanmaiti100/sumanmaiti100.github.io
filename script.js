@@ -134,3 +134,18 @@ filterBtns.forEach(btn => {
 
 const footerYear = document.getElementById('footerYear');
 if (footerYear) footerYear.textContent = new Date().getFullYear();
+
+// ── 8. VISITOR COUNTER (CountAPI) ────────────────────────────────
+
+const visitorCount = document.getElementById('visitorCount');
+if (visitorCount) {
+    fetch('https://api.countapi.xyz/hit/sumanmaiti100.github.io/visits')
+        .then(res => res.json())
+        .then(data => {
+            visitorCount.textContent = `${data.value} views`;
+        })
+        .catch(err => {
+            console.error('Error fetching visitor count:', err);
+            visitorCount.textContent = '';
+        });
+}

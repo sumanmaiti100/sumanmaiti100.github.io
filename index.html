@@ -80,6 +80,7 @@
     }
     </script>
 
+    <link rel="preload" as="image" href="assets/images/profile.webp" type="image/webp">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,10 +123,15 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-image-wrap">
-                    <img src="assets/images/profile.png"
-                         alt="Suman Maiti — PhD Research Scholar, CSE, IIT Kharagpur"
-                         class="profile-photo"
-                         onerror="this.style.display='none'; document.getElementById('initials-avatar').style.display='flex';">
+                    <picture>
+                        <source srcset="assets/images/profile.webp" type="image/webp">
+                        <img src="assets/images/profile.png"
+                             alt="Suman Maiti — PhD Research Scholar, CSE, IIT Kharagpur"
+                             class="profile-photo"
+                             fetchpriority="high"
+                             decoding="async"
+                             onerror="this.style.display='none'; document.getElementById('initials-avatar').style.display='flex';">
+                    </picture>
                     <div class="initials-avatar" id="initials-avatar" aria-hidden="true">SM</div>
                 </div>
 
@@ -946,6 +952,10 @@
         <div class="container">
             <div class="footer-inner">
                 <p class="footer-copy">&copy; <span id="footerYear"></span> Suman Maiti &mdash; CSE, IIT Kharagpur</p>
+                <p class="footer-note" style="margin-top: 0.4rem;">
+                    <i class="fas fa-eye" style="margin-right: 0.35rem; opacity: 0.6;"></i>
+                    <span id="visitorCount" style="opacity: 0.7;">Loading visits...</span>
+                </p>
                 <nav class="footer-nav" aria-label="Footer navigation">
                     <a href="#home">Home</a>
                     <a href="#about">About</a>
