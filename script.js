@@ -1,151 +1,156 @@
-/* ─────────────────────────────────────────────────────────────────
-   SUMAN MAITI — ACADEMIC PORTFOLIO
-   script.js
-   ───────────────────────────────────────────────────────────────── */
-
+/* ─────────────────────────────────────────────────────────────
+   SUMAN MAITI — ACADEMIC SITE · script.js
+   ───────────────────────────────────────────────────────────── */
 'use strict';
 
-// ── 1. THEME (dark / light) ──────────────────────────────────────
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const root = document.documentElement;
 
-const html        = document.documentElement;
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon   = document.getElementById('themeIcon');
-
-function applyTheme(theme) {
-    html.setAttribute('data-theme', theme);
-    themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    localStorage.setItem('theme', theme);
+/* ── Toast & clipboard ─────────────────────────────────────── */
+const toastEl = $('#toast');
+let toastTimer;
+function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2000);
 }
 
-// Load persisted preference (default: light)
-applyTheme(localStorage.getItem('theme') || 'light');
-
-themeToggle.addEventListener('click', () => {
-    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-});
-
-// ── 2. MOBILE HAMBURGER MENU ─────────────────────────────────────
-
-const hamburger = document.getElementById('hamburger');
-const navMenu   = document.getElementById('navMenu');
-
-hamburger.addEventListener('click', () => {
-    const open = navMenu.classList.toggle('open');
-    hamburger.classList.toggle('open', open);
-    hamburger.setAttribute('aria-expanded', String(open));
-});
-
-// Close menu when a nav link is clicked
-navMenu.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-    });
-});
-
-// Close menu on outside click
-document.addEventListener('click', e => {
-    if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
-        navMenu.classList.remove('open');
-        hamburger.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
+async function copyText(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+        return true;
+    } catch {
+        const ta = Object.assign(document.createElement('textarea'), { value: text });
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        const ok = document.execCommand('copy');
+        ta.remove();
+        return ok;
     }
+}
+
+/* ── Theme (follows system unless the visitor picks one) ───── */
+const themeBtn = $('#themeToggle');
+const isDark = () => root.dataset.theme
+    ? root.dataset.theme === 'dark'
+    : matchMedia('(prefers-color-scheme: dark)').matches;
+
+function syncThemeIcon() {
+    themeBtn.firstElementChild.className = isDark() ? 'fas fa-sun' : 'fas fa-moon';
+}
+syncThemeIcon();
+themeBtn.addEventListener('click', () => {
+    root.dataset.theme = isDark() ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch {}
+    syncThemeIcon();
 });
 
-// ── 3. NAVBAR SCROLL SHADOW ──────────────────────────────────────
+/* ── Mobile menu ───────────────────────────────────────────── */
+const nav = $('#nav');
+const navLinks = $('#navLinks');
+const menuBtn = $('#menuBtn');
 
-const navbar = document.getElementById('navbar');
+function setMenu(open) {
+    navLinks.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.firstElementChild.className = open ? 'fas fa-xmark' : 'fas fa-bars';
+}
+menuBtn.addEventListener('click', () => setMenu(!navLinks.classList.contains('open')));
+navLinks.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+document.addEventListener('click', e => { if (!nav.contains(e.target)) setMenu(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 
-window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 10);
-}, { passive: true });
+/* ── Active section in nav ─────────────────────────────────── */
+const linkFor = Object.fromEntries($$('a[href^="#"]', navLinks).map(a => [a.hash.slice(1), a]));
+const tracked = $$('main section[id]').filter(s => linkFor[s.id]);
 
-// ── 4. ACTIVE NAV LINK HIGHLIGHTING ─────────────────────────────
-
-const sections  = document.querySelectorAll('section[id]');
-const navLinks  = document.querySelectorAll('.nav-link');
-const navHeight = parseInt(getComputedStyle(html).getPropertyValue('--nav-h') || '64', 10);
-
-function updateActiveLink() {
+function updateActive() {
     let current = '';
-    sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - navHeight - 40) {
-            current = sec.id;
-        }
-    });
-    navLinks.forEach(link => {
-        link.classList.toggle(
-            'active',
-            link.getAttribute('href') === `#${current}`
-        );
-    });
+    for (const s of tracked) if (s.offsetTop - 100 <= scrollY) current = s.id;
+    for (const [id, a] of Object.entries(linkFor)) a.classList.toggle('active', id === current);
 }
+addEventListener('scroll', updateActive, { passive: true });
+updateActive();
 
-window.addEventListener('scroll', updateActiveLink, { passive: true });
-updateActiveLink();
+/* ── Publication filter ────────────────────────────────────── */
+const pubEmpty = $('#pubEmpty');
 
-// ── 5. SCROLL REVEAL (IntersectionObserver) ──────────────────────
-
-const revealObserver = new IntersectionObserver(
-    (entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target);
-            }
-        });
-    },
-    { threshold: 0.08, rootMargin: '0px 0px -48px 0px' }
-);
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ── 6. PUBLICATION FILTER ────────────────────────────────────────
-
-const filterBtns = document.querySelectorAll('.filter-btn');
-const pubCards   = document.querySelectorAll('.pub-card');
-
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Toggle active state
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-
-        pubCards.forEach(card => {
-            const match = filter === 'all' || card.dataset.type === filter;
-            if (match) {
-                card.classList.remove('hidden');
-                // Re-trigger reveal if not yet visible
-                if (!card.classList.contains('visible')) {
-                    card.classList.add('visible');
-                }
-            } else {
-                card.classList.add('hidden');
-            }
-        });
+$$('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+    $$('.filter-btn').forEach(b => {
+        b.classList.toggle('is-on', b === btn);
+        b.setAttribute('aria-pressed', String(b === btn));
     });
+    const f = btn.dataset.filter;
+    $$('.pub').forEach(p => { p.hidden = f !== 'all' && p.dataset.type !== f; });
+    // Hide group headings with nothing left under them
+    $$('.pubs').forEach(list => {
+        const empty = !$$('.pub', list).some(p => !p.hidden);
+        list.hidden = empty;
+        list.previousElementSibling.hidden = empty;
+    });
+    pubEmpty.hidden = $$('.pub').some(p => !p.hidden);
+}));
+
+// Highlight a paper when jumped to from the Research section
+document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#pub-"]');
+    const target = a && document.getElementById(a.hash.slice(1));
+    if (!target) return;
+    if (target.hidden) $('.filter-btn[data-filter="all"]').click();
+    target.classList.remove('flash');
+    void target.offsetWidth;
+    target.classList.add('flash');
 });
 
-// ── 7. FOOTER YEAR ───────────────────────────────────────────────
+/* ── BibTeX ────────────────────────────────────────────────── */
+const bibModal = $('#bibModal');
+const bibText = $('#bibText');
 
-const footerYear = document.getElementById('footerYear');
-if (footerYear) footerYear.textContent = new Date().getFullYear();
-
-// ── 8. VISITOR COUNTER (CountAPI) ────────────────────────────────
-
-const visitorCount = document.getElementById('visitorCount');
-if (visitorCount) {
-    fetch('https://api.countapi.xyz/hit/sumanmaiti100.github.io/visits')
-        .then(res => res.json())
-        .then(data => {
-            visitorCount.textContent = `${data.value} views`;
-        })
-        .catch(err => {
-            console.error('Error fetching visitor count:', err);
-            visitorCount.textContent = '';
-        });
+function toBib(p) {
+    const title = $('.pub-title', p).textContent.trim();
+    const authors = $('.pub-authors', p).textContent.trim().split(/\s*,\s*/).join(' and ');
+    const type = p.dataset.bibType;
+    const venueField = type === 'article' ? 'journal' : type === 'misc' ? 'howpublished' : 'booktitle';
+    const fields = [
+        ['title', `{${title}}`],
+        ['author', authors],
+        [venueField, p.dataset.bibVenue],
+        ['year', p.dataset.bibYear],
+    ].filter(([, v]) => v);
+    const w = Math.max(...fields.map(([k]) => k.length));
+    return `@${type}{${p.dataset.bibKey},\n` +
+        fields.map(([k, v]) => `  ${k.padEnd(w)} = {${v}}`).join(',\n') + '\n}';
 }
+
+$$('[data-bib]').forEach(btn => btn.addEventListener('click', () => {
+    bibText.textContent = toBib(btn.closest('.pub'));
+    bibModal.showModal();
+}));
+$('#copyBib').addEventListener('click', async () => {
+    if (await copyText(bibText.textContent)) toast('BibTeX copied');
+});
+
+/* ── Dialogs & video player ────────────────────────────────── */
+$$('dialog.modal').forEach(d => d.addEventListener('click', e => {
+    if (e.target === d || e.target.closest('[data-close]')) d.close();
+}));
+
+const videoModal = $('#videoModal');
+const videoFrame = $('#videoFrame');
+document.addEventListener('click', e => {
+    const v = e.target.closest('[data-video]');
+    if (!v || e.metaKey || e.ctrlKey) return;
+    e.preventDefault();
+    videoFrame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.dataset.video}?autoplay=1&rel=0" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    videoModal.showModal();
+});
+videoModal.addEventListener('close', () => { videoFrame.innerHTML = ''; });
+
+/* ── Copy email, footer year ───────────────────────────────── */
+const copyEmail = $('#copyEmail');
+copyEmail.addEventListener('click', async () => {
+    if (await copyText(copyEmail.dataset.email)) toast('Email address copied');
+});
+$('#year').textContent = new Date().getFullYear();
